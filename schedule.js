@@ -64,8 +64,8 @@ function saveScheduleToFile(schedule) {
         output += `Week ${weekIndex + 1}:\n`;
 
         weekSchedule.forEach((game, gameIndex) => {
-            output += `  Game ${gameIndex + 1}, Team 1: ${game[0][0]} & ${game[0][1]}\n`;
-            output += `  Game ${gameIndex + 1}, Team 2: ${game[1][0]} & ${game[1][1]}\n`;
+            output += `  \nGame ${gameIndex + 1}:\n  Team 1: ${game[0][0]} & ${game[0][1]}\n`;
+            output += `  Team 2: ${game[1][0]} & ${game[1][1]}\n`;
         });
 
         output += '\n'; // Add newline between weeks
