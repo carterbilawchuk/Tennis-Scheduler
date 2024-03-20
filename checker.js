@@ -7,6 +7,10 @@ function checkSchedule(schedule) {
     const playerOpponentMap = new Map(); // Map to track opponents for each player
 
     for (const weekSchedule of schedule) {
+        if (weekSchedule.length !== 3) {
+            console.log(`Week does not have exactly 3 games.`);
+            return false;
+        }
         for (const game of weekSchedule) {
             const teams = game;
 
@@ -63,6 +67,7 @@ function checkSchedule(schedule) {
     }
     return true;
 }
+
 
 // Helper function to check if two teams are equal
 function teamsAreEqual(team1, team2) {

@@ -1,0 +1,78 @@
+Week 1:
+  
+Game 1:
+  Player7 & Player10
+  Player12 & Player11
+  
+Game 2:
+  Player4 & Player3
+  Player2 & Player1
+  
+Game 3:
+  Player8 & Player6
+  Player5 & Player9
+
+Week 2:
+  
+Game 1:
+  Player1 & Player7
+  Player3 & Player6
+  
+Game 2:
+  Player5 & Player10
+  Player2 & Player4
+
+Week 3:
+  
+Game 1:
+  Player9 & Player6
+  Player7 & Player3
+  
+Game 2:
+  Player8 & Player2
+  Player1 & Player4
+
+Week 4:
+  
+Game 1:
+  Player12 & Player4
+  Player1 & Player8
+  
+Game 2:
+  Player5 & Player2
+  Player9 & Player11
+
+Week 5:
+  
+Game 1:
+  Player6 & Player2
+  Player7 & Player8
+  
+Game 2:
+  Player11 & Player1
+  Player12 & Player3
+  
+Game 3:
+  Player9 & Player4
+  Player5 & Player10
+
+Week 6:
+  
+Game 1:
+  Player3 & Player9
+  Player5 & Player1
+  
+Game 2:
+  Player2 & Player7
+  Player8 & Player4
+
+Week 7:
+  
+Game 1:
+  Player4 & Player6
+  Player5 & Player12
+  
+Game 2:
+  Player2 & Player11
+  Player10 & Player9
+
