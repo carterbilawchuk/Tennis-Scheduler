@@ -36,27 +36,43 @@ function generateSchedule(players) {
             shuffleArray(weekPlayers);
 
             // Select players for team 1
-            const player1 = weekPlayers.pop();
-            let player2 = weekPlayers.pop();
-            // Ensure player2 hasn't played against player1 twice
-            while (playerOpponents.get(player1).has(player2) || playerOpponents.get(player2).has(player1)) {
-                console.log(`Player ${player2} has already played against player ${player1} twice.`);
-                weekPlayers.unshift(player2);
+            let player1, player2;
+            do {
+                if (weekPlayers.length < 2) {
+                    console.log("Insufficient players for team 1. Aborting game generation.");
+                    break;
+                }
+                player1 = weekPlayers.pop();
                 player2 = weekPlayers.pop();
+                // Ensure player2 hasn't played against player1 twice
+            } while (player2 && (playerOpponents.get(player1).has(player2) || playerOpponents.get(player2).has(player1)));
+
+            if (!player2) {
+                console.log("No more players left for team 1. Aborting game generation.");
+                break;
             }
+
             team1.push(player1, player2);
             playerOpponents.get(player1).add(player2);
             playerOpponents.get(player2).add(player1);
 
             // Select players for team 2
-            const player3 = weekPlayers.pop();
-            let player4 = weekPlayers.pop();
-            // Ensure player4 hasn't played against player3 twice
-            while (playerOpponents.get(player3).has(player4) || playerOpponents.get(player4).has(player3)) {
-                console.log(`Player ${player4} has already played against player ${player3} twice.`);
-                weekPlayers.unshift(player4);
+            let player3, player4;
+            do {
+                if (weekPlayers.length < 2) {
+                    console.log("Insufficient players for team 2. Aborting game generation.");
+                    break;
+                }
+                player3 = weekPlayers.pop();
                 player4 = weekPlayers.pop();
+                // Ensure player4 hasn't played against player3 twice
+            } while (player4 && (playerOpponents.get(player3).has(player4) || playerOpponents.get(player4).has(player3)));
+
+            if (!player4) {
+                console.log("No more players left for team 2. Aborting game generation.");
+                break;
             }
+
             team2.push(player3, player4);
             playerOpponents.get(player3).add(player4);
             playerOpponents.get(player4).add(player3);
@@ -71,7 +87,6 @@ function generateSchedule(players) {
     console.log("Schedule generation completed.");
     return schedule;
 }
-
 
 // Function to save the schedule to a text file
 function saveScheduleToFile(schedule) {
@@ -94,7 +109,7 @@ function saveScheduleToFile(schedule) {
 
 // Main function
 function main() {
-    const players = ['1-John', '2-James', '3-Jayden', '4-Carter', '5-Emily', '6-Noah', '7-Sam', '8-Rich', '9-Connor', '10-Bob', '11-Cullen', '12-Nolan'];
+    const players = ['Player1', 'Player2', 'Player3', 'Player4', 'Player5', 'Player6', 'Player7', 'Player8', 'Player9', 'Player10', 'Player11', 'Player12'];
     const schedule = generateSchedule(players);
     saveScheduleToFile(schedule);
 }

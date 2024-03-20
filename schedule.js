@@ -21,6 +21,12 @@ function generateSchedule(players) {
         playerOpponents.set(player, new Set());
     }
 
+    // Initialize a map to track the teams each player has been assigned to
+    const playerTeams = new Map();
+    for (const player of players) {
+        playerTeams.set(player, new Set());
+    }
+
     for (let week = 0; week < weeks; week++) {
         console.log(`Generating schedule for week ${week + 1}...`);
         const weekPlayers = [...players]; // Make a copy of players for each week
@@ -44,8 +50,13 @@ function generateSchedule(players) {
                 }
                 player1 = weekPlayers.pop();
                 player2 = weekPlayers.pop();
-                // Ensure player2 hasn't played against player1 twice
-            } while (player2 && (playerOpponents.get(player1).has(player2) || playerOpponents.get(player2).has(player1)));
+                // Ensure player2 hasn't played against player1 twice and they are not on the same team
+            } while (
+                player2 &&
+                (playerOpponents.get(player1).has(player2) ||
+                    playerOpponents.get(player2).has(player1) ||
+                    playerTeams.get(player1).has(player2))
+            );
 
             if (!player2) {
                 console.log("No more players left for team 1. Aborting game generation.");
@@ -55,6 +66,8 @@ function generateSchedule(players) {
             team1.push(player1, player2);
             playerOpponents.get(player1).add(player2);
             playerOpponents.get(player2).add(player1);
+            playerTeams.get(player1).add(player2);
+            playerTeams.get(player2).add(player1);
 
             // Select players for team 2
             let player3, player4;
@@ -65,8 +78,13 @@ function generateSchedule(players) {
                 }
                 player3 = weekPlayers.pop();
                 player4 = weekPlayers.pop();
-                // Ensure player4 hasn't played against player3 twice
-            } while (player4 && (playerOpponents.get(player3).has(player4) || playerOpponents.get(player4).has(player3)));
+                // Ensure player4 hasn't played against player3 twice and they are not on the same team
+            } while (
+                player4 &&
+                (playerOpponents.get(player3).has(player4) ||
+                    playerOpponents.get(player4).has(player3) ||
+                    playerTeams.get(player3).has(player4))
+            );
 
             if (!player4) {
                 console.log("No more players left for team 2. Aborting game generation.");
@@ -76,6 +94,8 @@ function generateSchedule(players) {
             team2.push(player3, player4);
             playerOpponents.get(player3).add(player4);
             playerOpponents.get(player4).add(player3);
+            playerTeams.get(player3).add(player4);
+            playerTeams.get(player4).add(player3);
 
             game.push(team1, team2);
             weekSchedule.push(game);

@@ -3,14 +3,11 @@ const { exec } = require('child_process');
 
 // Function to check if the schedule meets all criteria
 function checkSchedule(schedule) {
-    const playerTeamMap = new Map(); // Map to track which players are on the same team
+    const playerTeamMap = new Map(); // Map to track which players are on the same team for each week
     const playerOpponentMap = new Map(); // Map to track opponents for each player
 
-    for (const weekSchedule of schedule) {
-        if (weekSchedule.length !== 3) {
-            console.log(`Week does not have exactly 3 games.`);
-            return false;
-        }
+    for (let weekIndex = 0; weekIndex < schedule.length; weekIndex++) {
+        const weekSchedule = schedule[weekIndex];
         for (const game of weekSchedule) {
             const teams = game;
 
@@ -27,27 +24,28 @@ function checkSchedule(schedule) {
             }
             for (const [player, count] of playerCountMap.entries()) {
                 if (count !== 1) {
-                    console.log(`Player ${player} plays ${count} times in week.`);
+                    console.log(`Player ${player} plays ${count} times in week ${weekIndex + 1}.`);
                     return false;
                 }
             }
 
-            // Check if any player is on the same team more than once
+            // Check if any player is on the same team more than once in the tournament
             for (const team of teams) {
                 for (const player of team) {
                     if (playerTeamMap.has(player)) {
-                        const previousTeam = playerTeamMap.get(player);
-                        if (teamsAreEqual(previousTeam, team)) {
-                            console.log(`Player ${player} is on the same team more than once.`);
+                        const previousTeams = playerTeamMap.get(player);
+                        if (previousTeams.some(prevTeam => teamsAreEqual(prevTeam, team))) {
+                            console.log(`Player ${player} is on the same team for the whole tournament.`);
                             return false;
                         }
+                        previousTeams.push(team);
                     } else {
-                        playerTeamMap.set(player, team);
+                        playerTeamMap.set(player, [team]);
                     }
                 }
             }
 
-            // Check if any player faces the same opponent more than twice
+            // Check if any player faces the same opponent more than twice in the tournament
             for (const team of teams) {
                 for (const player of team) {
                     const opponent = getOpponent(team, player);
@@ -56,7 +54,7 @@ function checkSchedule(schedule) {
                     } else {
                         const opponents = playerOpponentMap.get(player);
                         if (opponents.has(opponent)) {
-                            console.log(`Player ${player} faces the same opponent more than twice.`);
+                            console.log(`Player ${player} faces the same opponent more than twice in week ${weekIndex + 1}.`);
                             return false;
                         }
                         opponents.add(opponent);
@@ -67,6 +65,7 @@ function checkSchedule(schedule) {
     }
     return true;
 }
+
 
 
 // Helper function to check if two teams are equal
