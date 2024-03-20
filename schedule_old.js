@@ -34,24 +34,14 @@ function generateSchedule(players) {
 
             // Select players for team 1
             const player1 = weekPlayers.pop();
-            let player2 = weekPlayers.pop();
-            // Ensure player2 hasn't played against player1 twice
-            while (playerOpponents.get(player1).has(player2) || playerOpponents.get(player2).has(player1)) {
-                weekPlayers.unshift(player2);
-                player2 = weekPlayers.pop();
-            }
+            const player2 = weekPlayers.pop();
             team1.push(player1, player2);
             playerOpponents.get(player1).add(player2);
             playerOpponents.get(player2).add(player1);
 
             // Select players for team 2
             const player3 = weekPlayers.pop();
-            let player4 = weekPlayers.pop();
-            // Ensure player4 hasn't played against player3 twice
-            while (playerOpponents.get(player3).has(player4) || playerOpponents.get(player4).has(player3)) {
-                weekPlayers.unshift(player4);
-                player4 = weekPlayers.pop();
-            }
+            const player4 = weekPlayers.pop();
             team2.push(player3, player4);
             playerOpponents.get(player3).add(player4);
             playerOpponents.get(player4).add(player3);
