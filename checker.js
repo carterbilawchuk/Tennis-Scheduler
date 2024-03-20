@@ -151,6 +151,12 @@ async function main() {
                 await generateSchedule();
             } else {
                 console.log('The schedule meets all criteria.');
+                fs.rename(
+                    'tennis_schedule.txt',
+                    'tennis_schedule_approved.txt',
+                    () => {
+                        console.log("\nFile Renamed!\n");
+                    });
             }
         } catch (error) {
             console.error('An error occurred:', error);

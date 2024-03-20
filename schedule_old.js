@@ -10,6 +10,7 @@ function shuffleArray(array) {
 
 // Function to generate the schedule
 function generateSchedule(players) {
+    console.log("Generating schedule...");
     const weeks = 7;
     const gamesPerWeek = players.length / 4; // 3 games per week
     const schedule = [];
@@ -21,10 +22,12 @@ function generateSchedule(players) {
     }
 
     for (let week = 0; week < weeks; week++) {
+        console.log(`Generating schedule for week ${week + 1}...`);
         const weekPlayers = [...players]; // Make a copy of players for each week
         const weekSchedule = [];
 
         for (let i = 0; i < gamesPerWeek; i++) {
+            console.log(`Generating game ${i + 1} for week ${week + 1}...`);
             const game = [];
             const team1 = [];
             const team2 = [];
@@ -34,14 +37,26 @@ function generateSchedule(players) {
 
             // Select players for team 1
             const player1 = weekPlayers.pop();
-            const player2 = weekPlayers.pop();
+            let player2 = weekPlayers.pop();
+            // Ensure player2 hasn't played against player1 twice
+            while (playerOpponents.get(player1).has(player2) || playerOpponents.get(player2).has(player1)) {
+                console.log(`Player ${player2} has already played against player ${player1} twice.`);
+                weekPlayers.unshift(player2);
+                player2 = weekPlayers.pop();
+            }
             team1.push(player1, player2);
             playerOpponents.get(player1).add(player2);
             playerOpponents.get(player2).add(player1);
 
             // Select players for team 2
             const player3 = weekPlayers.pop();
-            const player4 = weekPlayers.pop();
+            let player4 = weekPlayers.pop();
+            // Ensure player4 hasn't played against player3 twice
+            while (playerOpponents.get(player3).has(player4) || playerOpponents.get(player4).has(player3)) {
+                console.log(`Player ${player4} has already played against player ${player3} twice.`);
+                weekPlayers.unshift(player4);
+                player4 = weekPlayers.pop();
+            }
             team2.push(player3, player4);
             playerOpponents.get(player3).add(player4);
             playerOpponents.get(player4).add(player3);
@@ -53,8 +68,10 @@ function generateSchedule(players) {
         schedule.push(weekSchedule);
     }
 
+    console.log("Schedule generation completed.");
     return schedule;
 }
+
 
 // Function to save the schedule to a text file
 function saveScheduleToFile(schedule) {
@@ -77,7 +94,7 @@ function saveScheduleToFile(schedule) {
 
 // Main function
 function main() {
-    const players = ['Player1', 'Player2', 'Player3', 'Player4', 'Player5', 'Player6', 'Player7', 'Player8', 'Player9', 'Player10', 'Player11', 'Player12'];
+    const players = ['1-John', '2-James', '3-Jayden', '4-Carter', '5-Emily', '6-Noah', '7-Sam', '8-Rich', '9-Connor', '10-Bob', '11-Cullen', '12-Nolan'];
     const schedule = generateSchedule(players);
     saveScheduleToFile(schedule);
 }
