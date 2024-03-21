@@ -66,8 +66,6 @@ function checkSchedule(schedule) {
     return true;
 }
 
-
-
 // Helper function to check if two teams are equal
 function teamsAreEqual(team1, team2) {
     return (team1[0] === team2[0] && team1[1] === team2[1]) || (team1[0] === team2[1] && team1[1] === team2[0]);
@@ -86,6 +84,13 @@ function checkScheduleFromFile(filePath) {
 
         // Parse the content to extract schedule information
         const lines = content.split('\n');
+
+        // Check if the file contains at least 95 lines
+        if (lines.length < 95) {
+            console.log('The file does not contain at least 95 lines.');
+            return false;
+        }
+
         const schedule = [];
         let currentWeek = null;
         let currentGame = null;
